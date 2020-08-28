@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>前端门户-测试查询某篇文章</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script src="../layui/layui.js"></script>
+</head>
+<body>
+    <div class="layui-container layui-bg-gray">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md9">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <div style="text-align: center">
+                            <h3 id="title"></h3>
+                            <span id="lastTime"></span>
+                            &nbsp;<label id="publisher"></label>
+                        </div>
+                        <hr class="layui-bg-gray">
+                        <div id="content"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-body" style="text-align: center">
+                        <img id="thumb" src="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //-- 这里测试查询ID为5的文章，可根据实际的需要进行设置ID的值
+        layui.use(['jquery'],function () {
+            var $ = layui.jquery;
+            $.ajax({
+                url:"http://192.168.0.135:8080/lab/article",
+                async : false,
+                type : "GET",
+                dataType:"json",
+                data: {id:3},
+                success : function(data){
+                    console.log(data);
+					$('#title').html(data['title']);
+					$('#lastTime').html(data['lastTime']);
+					$('#thumb').attr('src',data['thumbnailUrl']);
+					$('#content').html(data['content']);
+					$('#publisher').html(data['publisher']);
+                },
+                error : function (res) {
+
+                }
+            });
+        });
+    </script>
+</body>
+</html>
